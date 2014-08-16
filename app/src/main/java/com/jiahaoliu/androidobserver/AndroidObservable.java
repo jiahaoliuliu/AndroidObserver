@@ -10,9 +10,21 @@ import java.util.Observer;
 
 public class AndroidObservable extends Observable {
 
+    /**
+     * The countdown will be for 10 seconds
+     */
+    private static final int TOTAL_TIME = 10000;
+
+    /**
+     * The tick will be sent with the interval of 1 second
+     */
+    private static final int TICKS = 1000;
+
+    private int ticks;
+
     public AndroidObservable() {
         super();
-        SimpleCountDownTimer simpleCountDownTimer = new SimpleCountDownTimer(10000, 1000);
+        SimpleCountDownTimer simpleCountDownTimer = new SimpleCountDownTimer(TOTAL_TIME, TICKS);
         simpleCountDownTimer.start();
     }
 
@@ -31,14 +43,15 @@ public class AndroidObservable extends Observable {
 
         @Override
         public void onTick(long millisUntilFinished) {
+            ticks ++;
             setChanged();
-            notifyObservers();
+            notifyObservers(ticks);
         }
 
         @Override
         public void onFinish() {
             setChanged();
-            notifyObservers();
+            notifyObservers(ticks);
         }
     };
 }
